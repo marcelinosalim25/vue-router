@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-for="todo in todos" :key="todo.id">
+      <h2>{{ todo.name }}</h2>
+      
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { collection, getDocs } from "firebase/firestore"
+import db from "../firebase"
 
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
+  mounted() {
+    getDocs(collection(db, "todos")).then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.todos.push(doc.data());
+      });
+    });
+  },
+
+  data() {
+    return {
+      todos: [],
+    }
   }
 }
 </script>
