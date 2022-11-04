@@ -3,8 +3,12 @@
     <div v-for="todo in todos" :key="todo.id">
       <h2>{{ todo.name }}</h2>
       {{ todo.description }}
+      {{ todo.categories }}
       <button @click="deleteTodo(todo.id)">Delete Task</button>
-      <button @click="$router.push"></button>
+      <button @click="$router.push({
+        name: 'edit',
+        params: { id: todo.id}
+      })">Edit</button>
     </div>
   </div>
 </template>

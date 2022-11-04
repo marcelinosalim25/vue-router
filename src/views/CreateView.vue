@@ -10,6 +10,7 @@
       </form>
       <div v-for="category in todo.categories" :key="category">
         {{ category }}
+        <button @click="deleteCategory(category)">Delete</button>
       </div>
       <button type="submit">Save</button>
     </form>
@@ -17,10 +18,18 @@
 </template>
 
 <script>
-import { collection, setDoc, doc } from 'firebase/firestore'
+import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
 import db from '../firebase'
 
 export default {
+  mounted() {
+    if (this.$route.name === "edit" ) {
+      (async () => {
+        this.todo = await getDocs(doc(db, "todos", this.$route.params.id));
+      })();
+    }
+  },
+
   data() {
     return {
       todo: {
@@ -42,6 +51,10 @@ export default {
       (async () => {
         await setDoc(doc(collection(db, "todos")), this.todo);
       })();
+    },
+
+    deleteCategory(category) {
+      this.todo.categories
     }
   }
 }

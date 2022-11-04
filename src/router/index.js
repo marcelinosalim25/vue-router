@@ -12,6 +12,11 @@ const routes = [
     path: '/create',
     name: 'create',
     component: CreateView
+  },
+  {
+    path: '/create/edit',
+    name: 'create',
+    component: CreateView
   }
 ]
 
