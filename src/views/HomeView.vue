@@ -4,6 +4,7 @@
       <h2>{{ todo.name }}</h2>
       {{ todo.description }}
       <button @click="deleteTodo(todo.id)">Delete Task</button>
+      <button @click="$router.push"></button>
     </div>
   </div>
 </template>
@@ -28,8 +29,8 @@ export default {
   },
 
   methods: {
-    deleteTodo(todoID) {
-      deleteDoc(doc(db, "todos", todoID));
+    async deleteTodo(todoID) {
+      await deleteDoc(doc(db, "todos", todoID));
     }
   }
 }
